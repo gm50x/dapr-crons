@@ -1,0 +1,29 @@
+version: "3"
+services:
+  myapp:
+    build:
+      context: "./"
+      dockerfile: "./Dockerfile"
+    networks:
+      - skynet
+    deploy:
+      restart_policy:
+        condition: on-failure
+  myapp-sidecar:
+    image: "daprio/daprd:edge"
+    command:
+      [
+        "./daprd",
+        "-app-id", "myapp",
+        "-app-port", "3000",
+        "-placement-host-address", "placement:50005",
+        "-components-path", "/components"
+      ]
+    volumes:
+      - "./components/:/components"
+    depends_on:
+      - myapp
+    network_mode: "service:myapp"
+networks:
+  skynet:
+    name: skynet_dapr
