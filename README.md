@@ -49,7 +49,11 @@ async function getHardcodedSecret() {
 Para executar esta aplicação basta executar o seguinte comando:
 
 ```bash
+# Execução simulada de 'prod', mas ainda em dev
 docker compose up --build
+
+# Execução de 'dev' -> Apontando o volume para a pasta local e utilizando nodemon para restartar o serviço a cada alteração nos arquivos.
+docker compose -f docker-compose.dev.yaml up --build
 ```
 
 ## [Dapr](https://dapr.io/) -> Distributed Applications Runtime
